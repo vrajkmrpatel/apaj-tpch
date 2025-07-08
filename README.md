@@ -83,7 +83,7 @@ perm3,0.40,920503,10,Sequential
 
 ## 📚 References
 
-- [📄 Original Paper PDF](resources/Exploiting_Access_Pattern_Characteristics_for_Join_Reordering.pdf)
+- [📄 Original Paper PDF](resource/Exploiting_Access_Pattern_Characteristics_for_Join_Reordering.pdf)
 
 - Schubert et al., *"Exploiting Access Pattern Characteristics for Join Reordering"*, SIGMOD 2022
 - TPC-H Benchmark: https://www.tpc.org/tpch/
