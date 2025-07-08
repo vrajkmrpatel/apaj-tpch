@@ -1,0 +1,7 @@
+query,time_secs,cache_misses,rows_returned,first_join_pattern
+perm1,0.4794,1136574,10,Random
+perm2,0.4624,1113199,10,Pseudo-Random
+perm3,0.4151,1007977,10,Pseudo-Random
+perm4,0.4095,920503,10,Sequential
+perm5,0.4118,1274256,10,Random
+perm6,0.4110,1073319,10,Pseudo-Random
