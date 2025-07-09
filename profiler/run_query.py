@@ -1,49 +1,53 @@
+#!/usr/bin/env python3
+
+import subprocess
 import time
-import psycopg2
-import sys
+import csv
+import os
 
-# -------------------------------
-# Usage: python run_query.py path_to_sql_query.sql
-# -------------------------------
+SQL_DIR = "tpch_sql_queries"  # Update this to the actual directory path
+DB_NAME = "tpch"         # Your PostgreSQL database name
+OUTPUT_CSV = "results/perf_log.csv"
+PERF_COUNTER = "cache-misses"  # You can add more if needed
 
-if len(sys.argv) != 2:
-    print("Usage: python run_query.py path_to_sql_file.sql")
-    sys.exit(1)
+os.makedirs("results", exist_ok=True)
 
-sql_file = sys.argv[1]
+with open(OUTPUT_CSV, "w", newline="") as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(["query", "time_secs", "cache_misses", "rows_returned", "first_join_pattern"])
 
-# Read SQL query from file
-with open(sql_file, "r") as f:
-    query = f.read()
+    for i in range(1, 25):
+        sql_file = f"{SQL_DIR}/q5_perm{i}.sql"
+        cmd = [
+            "perf", "stat", "-e", PERF_COUNTER, "--", "psql", "-d", DB_NAME, "-f", sql_file
+        ]
+        print(f"Running {sql_file}...")
+        start = time.time()
 
-# Connect to PostgreSQL
-try:
-    conn = psycopg2.connect(
-        dbname="tpch",
-        user="postgres",
-        password="admin",   
-        host="localhost",
-        port="5432"
-    )
-    cur = conn.cursor()
-except Exception as e:
-    print("Error connecting to database:", e)
-    sys.exit(1)
+        # Run command and capture output and perf stats
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+        end = time.time()
 
-# Execute the query and time it
-try:
-    start = time.time()
-    cur.execute(query)
-    rows = cur.fetchall()
-    duration = time.time() - start
+        time_taken = round(end - start, 4)
+        cache_miss = None
+        rows_returned = None
 
-    print(f"Execution Time: {duration:.4f} seconds")
-    print(f"Rows Returned: {len(rows)}")
-except Exception as e:
-    print("Error executing query:", e)
-finally:
-    cur.close()
-    conn.close()
+        for line in proc.stderr.splitlines():
+            if PERF_COUNTER in line:
+                parts = line.strip().split()
+                if parts:
+                    try:
+                        cache_miss = int(parts[0].replace(",", ""))
+                    except:
+                        cache_miss = -1
 
+        for line in proc.stdout.splitlines():
+            if "rows" in line.lower():
+                try:
+                    rows_returned = int(line.strip().split()[0])
+                except:
+                    rows_returned = -1
 
+        writer.writerow([f"perm{i}", time_taken, cache_miss, rows_returned, ""])
 
+print("Finished profiling all queries.")
