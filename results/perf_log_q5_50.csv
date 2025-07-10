@@ -1,0 +1,9 @@
+permutation_id,selectivity,execution_time,rows_returned,L1_cache_misses,L1_misses_per_tuple,access_pattern
+perm1,50,0.3564,25,2991346,119653.84,Pseudo-Random
+perm2,50,0.3613,25,2952594,118103.76,Pseudo-Random
+perm3,50,0.3889,25,2974751,118990.04,Pseudo-Random
+perm4,50,0.3602,25,3010067,120402.68,Random
+perm5,50,0.3594,25,2984004,119360.16,Pseudo-Random
+perm6,50,0.361,25,3021114,120844.56,Random
+perm7,50,0.3589,25,2920887,116835.48,Pseudo-Random
+perm8,50,0.361,25,2998280,119931.2,Pseudo-Random

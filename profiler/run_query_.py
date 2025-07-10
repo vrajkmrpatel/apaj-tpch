@@ -46,6 +46,3 @@ finally:
     conn.close()
 
 # perf stat -e cache-misses python run_query_.py ../tpch_sql_queries/q5_perm1.sql
-
-
-

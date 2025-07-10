@@ -51,3 +51,5 @@ with open(OUTPUT_CSV, "w", newline="") as csvfile:
         writer.writerow([f"perm{i}", time_taken, cache_miss, rows_returned, ""])
 
 print("Finished profiling all queries.")
+
+# perf stat -e cache-references,cache-misses,L1-dcache-load-misses,l2_rqsts.miss,LLC-load-misses  python run_query_.py ../tpch_sql_queries/q5_perm1.sql
