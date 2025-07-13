@@ -1,0 +1,9 @@
+permutation_id,selectivity,rows_returned,execution_time,L1_cache_misses,L1_misses_per_tuple,access_pattern
+perm1,1,55,0.396,3014974,54817.70909090909,Repeated
+perm2,1,55,0.3451,2952367,53679.4,Repeated
+perm3,1,55,0.376,3036714,55212.98181818182,Repeated
+perm4,1,55,0.3676,2936655,53393.72727272727,Repeated
+perm5,1,55,0.3481,2893418,52607.6,Repeated
+perm6,1,55,0.3551,3018070,54874.0,Repeated
+perm7,1,55,0.3435,3031639,55120.70909090909,Repeated
+perm8,1,55,0.3503,2968229,53967.8,Repeated

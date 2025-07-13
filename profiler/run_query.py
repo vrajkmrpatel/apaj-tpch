@@ -5,9 +5,9 @@ import time
 import csv
 import os
 
-SQL_DIR = "tpch_sql_queries"  # Update this to the actual directory path
+SQL_DIR = "tpch_queries_1"  # Update this to the actual directory path
 DB_NAME = "tpch"         # Your PostgreSQL database name
-OUTPUT_CSV = "results/perf_log.csv"
+OUTPUT_CSV = "results_1/perf_log.csv"
 PERF_COUNTER = "cache-misses"  # You can add more if needed
 
 os.makedirs("results", exist_ok=True)
@@ -17,7 +17,7 @@ with open(OUTPUT_CSV, "w", newline="") as csvfile:
     writer.writerow(["query", "time_secs", "cache_misses", "rows_returned", "first_join_pattern"])
 
     for i in range(1, 25):
-        sql_file = f"{SQL_DIR}/q5_perm{i}.sql"
+        sql_file = f"{SQL_DIR}/perm{i}.sql"
         cmd = [
             "perf", "stat", "-e", PERF_COUNTER, "--", "psql", "-d", DB_NAME, "-f", sql_file
         ]
