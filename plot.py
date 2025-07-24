@@ -4,9 +4,9 @@ import seaborn as sns
 import os
 
 # Load the data
-df_1 = pd.read_csv("results/perf_log_q5_1.csv")
-df_50 = pd.read_csv("results/perf_log_q5_50.csv")
-df_99 = pd.read_csv("results/perf_log_q5_99.csv")
+df_1 = pd.read_csv("new_results/results_selectivity_1.csv")
+df_50 = pd.read_csv("new_results/results_selectivity_50.csv")
+df_99 = pd.read_csv("new_results/results_selectivity_99.csv")
 
 # Add selectivity labels
 df_1["Selectivity"] = "1%"
@@ -22,16 +22,16 @@ sns.set(style="darkgrid", palette="pastel")
 # Create subplots
 fig, axes = plt.subplots(2, 1, figsize=(12, 10), sharex=True)
 
-# Top plot: L1 Cache Misses per Tuple
+# Top plot: L1 Cache Misses
 sns.barplot(
     data=df_all,
     x="permutation_id",
-    y="L1_misses_per_tuple",
+    y="L1_cache_misses",
     hue="Selectivity",
     ax=axes[0]
 )
-axes[0].set_title("L1 Cache Misses per Tuple across Join Permutations at Different Selectivities")
-axes[0].set_ylabel("L1 Misses per Tuple")
+axes[0].set_title("L1 Cache Misses across Join Permutations at Different Selectivities")
+axes[0].set_ylabel("L1 Cache Misses")
 axes[0].set_xlabel("")
 
 # Bottom plot: Execution Time
@@ -48,5 +48,5 @@ axes[1].set_xlabel("Join Permutation")
 
 # Adjust layout
 plt.tight_layout()
-plt.savefig("results/q5_selectivity_analysis_combined.png")
+plt.savefig("new_results/barchart_combined.png")
 plt.show()

@@ -1,25 +1,10 @@
--- force join order
-SET join_collapse_limit = 1;
-SET from_collapse_limit = 1;
-
-SELECT
-    n.n_name,
-    c.c_name,
-    o.o_orderdate,
-    SUM(l.l_extendedprice * (1 - l.l_discount)) AS total_revenue
-FROM
-    orders o
-JOIN
-    lineitem l ON o.o_orderkey = l.l_orderkey
-JOIN
-    customer c ON o.o_custkey = c.c_custkey
-JOIN
-    nation n ON c.c_nationkey = n.n_nationkey
-WHERE
-    n.n_name IN ('UNITED STATES', 'CHINA', 'GERMANY', 'JAPAN', 'FRANCE')
-    AND o.o_orderdate BETWEEN DATE '1994-01-01' AND DATE '1994-07-01'
-    AND l.l_quantity BETWEEN 10 AND 20
-GROUP BY
-    n.n_name, c.c_name, o.o_orderdate
-ORDER BY
-    total_revenue DESC;
+SELECT n.n_name, SUM(l.l_extendedprice * (1 - l.l_discount)) AS revenue
+FROM orders o
+LEFT JOIN lineitem l ON l.l_orderkey = o.o_orderkey
+LEFT JOIN customer c ON o.o_custkey = c.c_custkey
+LEFT JOIN nation n ON c.c_nationkey = n.n_nationkey
+WHERE o.o_orderdate >= DATE '1994-01-01'
+  AND o.o_orderdate < DATE '1995-01-01'
+  AND MOD(o.o_orderkey, 2) = 0
+GROUP BY n.n_name
+ORDER BY revenue DESC;

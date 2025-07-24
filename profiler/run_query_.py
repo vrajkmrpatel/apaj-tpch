@@ -19,7 +19,7 @@ with open(sql_file, "r") as f:
 # Connect to PostgreSQL
 try:
     conn = psycopg2.connect(
-        dbname="tpch",
+        dbname="tpch_sf10",
         user="postgres",
         password="admin",   
         host="localhost",
@@ -46,4 +46,4 @@ finally:
     conn.close()
 
 # perf stat -e cache-misses python run_query_.py ../tpch_sql_queries/q5_perm1.sql
-# perf stat -e L1-dcache-load-misses python run_query_.py ../tpch_queries_1/perm1.sql
+# perf stat -e L1-dcache-load-misses python run_query_.py ../tpch_queries_1/selectivity_99/perm1.sql
